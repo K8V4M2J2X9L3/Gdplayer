@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Super Fast GD Player</title>
+  <style>
+    body { background: #fafafa; font-family: Arial; display: flex; flex-direction: column; align-items: center; margin: 0; }
+    .container { margin-top: 40px; background: #fff; padding: 32px 24px; border-radius: 12px; box-shadow: 0 6px 24px rgba(0,0,0,0.08); width: 95vw; max-width: 420px; text-align: center; }
+    input, button { margin: 12px auto; width: 90%; padding: 10px; border-radius: 6px; border: 1px solid #bbb; font-size: 1rem; }
+    button { background: #1976d2; color: #fff; border: none; cursor: pointer; }
+    video { margin-top: 24px; width: 100%; max-width: 640px; border-radius: 12px; }
+    .note { margin-top: 18px; color: #ff9800; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Super Fast GD Player</h2>
+    <input type="text" id="fileId" placeholder="Google Drive File ID" required>
+    <button onclick="playGDProxy()">Play Video</button>
+    <div id="playerArea"></div>
+    <div class="note">
+      File must be shared as "Anyone with the link can view" and be in .mp4 or compatible format.<br>
+      This uses your own backend proxy for smooth streaming!
+    </div>
+  </div>
+  <script>
+    function playGDProxy() {
+      var fileId = document.getElementById('fileId').value.trim();
+      var playerArea = document.getElementById('playerArea');
+      if (!fileId) {
+        playerArea.innerHTML = "<em>Please enter a Google Drive file ID.</em>";
+        return;
+      }
+      var src = "/stream/" + encodeURIComponent(fileId);
+      playerArea.innerHTML = `
+        <video controls autoplay>
+          <source src="${src}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      `;
+    }
+  </script>
+</body>
+</html>
